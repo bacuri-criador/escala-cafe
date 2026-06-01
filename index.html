@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escala de Café</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <p class="eyebrow">Gerador de escala</p>
+      <h1>☕ Escala de Café</h1>
+      <p class="subtitle">Calendário ou tabela, com feriados automáticos, organização manual e exportação para PDF e Excel.</p>
+    </div>
+
+    <div class="top-actions">
+      <button class="btn btn-outline" onclick="exportarExcel()">Exportar Excel</button>
+      <button class="btn btn-danger" onclick="exportarPDF()">Exportar PDF</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <section class="card">
+        <h2>Configurações</h2>
+
+        <div class="field-grid">
+          <label>
+            Ano
+            <input id="ano" type="number" min="2000" max="2100" value="2026" />
+          </label>
+
+          <label>
+            Mês
+            <select id="mes">
+              <option value="1">Janeiro</option>
+              <option value="2">Fevereiro</option>
+              <option value="3">Março</option>
+              <option value="4">Abril</option>
+              <option value="5">Maio</option>
+              <option value="6" selected>Junho</option>
+              <option value="7">Julho</option>
+              <option value="8">Agosto</option>
+              <option value="9">Setembro</option>
+              <option value="10">Outubro</option>
+              <option value="11">Novembro</option>
+              <option value="12">Dezembro</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          Participantes
+          <textarea id="pessoas" rows="5">Geovanna
+João Vitor
+Withallo
+Renata</textarea>
+        </label>
+
+        <label>
+          Feriados personalizados
+          <textarea id="feriadosCustom" rows="4" placeholder="AAAA-MM-DD, um por linha"></textarea>
+        </label>
+
+        <div class="hint">
+          Os feriados automáticos já entram no cálculo. Você pode adicionar feriados personalizados acima.
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" onclick="gerarEscala()">Gerar escala</button>
+          <button class="btn btn-soft" onclick="salvarEstado()">Salvar</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Modo de exibição</h2>
+        <div class="segmented">
+          <button id="btnCalendar" class="seg active" onclick="mudarVisao('calendar')">Calendário</button>
+          <button id="btnTable" class="seg" onclick="mudarVisao('table')">Tabela</button>
+        </div>
+        <p class="small">Mostramos só um modo por vez. O calendário é mais visual, a tabela facilita a troca manual.</p>
+      </section>
+
+      <section class="card">
+        <h2>Como editar</h2>
+        <ul class="tips">
+          <li>Arraste um nome para outro dia no calendário para trocar os responsáveis.</li>
+          <li>Na tabela, arraste uma linha para outra para trocar a escala.</li>
+          <li>Clique no nome de um dia útil para avançar para a próxima pessoa da lista.</li>
+        </ul>
+      </section>
+    </aside>
+
+    <section class="content">
+      <div id="summary" class="card"></div>
+      <div id="calendarView" class="card view-block"></div>
+      <div id="tableView" class="card view-block"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
